@@ -27,40 +27,40 @@ BlogPosts.create('Evaluating Ideas', 'Brainstorming is fun! In the early days of
 // when the root of this route is called with GET, return
 // all current BlogPosts items by calling `BlogPosts.get()`
 router.get('/', (req, res) => {
-  res.json(BlogPosts.get());
+    res.json(BlogPosts.get());
 });
 
 // when the root of this route is called with GET, return
 
 
 router.post('/', jsonParser, (req, res) => {
-  console.log('Entered app.post');
-  const title = req.body.title;
-  const content = req.body.content;
-  const author = req.body.author;
-  let item = BlogPosts.create(title, content, author);
-  console.log(item);
-  res.status(201).json(item);
+    console.log('Entered app.post');
+    const title = req.body.title;
+    const content = req.body.content;
+    const author = req.body.author;
+    let item = BlogPosts.create(title, content, author);
+    console.log(item);
+    res.status(201).json(item);
 });
 
 
 router.delete('/:id', (req, res) => {
-  BlogPosts.delete(req.params.id);
-  console.log('Deleting blog-posts item = ' + req.params.id);
-  res.status(204).end();
+    BlogPosts.delete(req.params.id);
+    console.log('Deleting blog-posts item = ' + req.params.id);
+    res.status(204).end();
 });
 
 
 router.put('/:id', (req, res) => {
-  console.log('app.put: Updating Blog post item ' + req.params.id);
+    console.log('app.put: Updating Blog post item ' + req.params.id + req.body.id);
 
-  if (req.params.id !== req.body.id) {
-    const message = 'IDs do not match';
-    console.log(message);
-    return res.status(400).send(message);
-  }
-  BlogPosts.update({ id: req.params.id, title: req.body.title, content: req.body.content, author: req.body.author, publishDate: req.body.publishDate });
-  res.status(204).end();
+    if (req.params.id !== req.body.id) {
+        const message = 'IDs do not match';
+        console.log(message);
+        return res.status(400).send(message);
+    }
+    BlogPosts.update({ id: req.params.id, title: req.body.title, content: req.body.content, author: req.body.author, publishDate: req.body.publishDate });
+    res.status(204).end();
 });
 
 module.exports = router;
